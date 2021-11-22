@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Profile
+{% endblock %}
+
+{% block style %}
+    *{
+        margin: 0;
+        padding: 0;
+        font-family: "Century Gothic";
+    }
+    header{
+        background-color: #d5f4e6;
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+    }
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+    }
+
+    li {float: left;}
+
+    li a {
+        display: block;
+        color: white;
+        font-size: 28px;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a:hover {background-color: #111;}
+    .active {background-color: #4CAF50;}
+    .name {
+        font-weight: bold;
+        font-style: italic;
+    }
+
+    .navbar {
+        border: 2px solid black;
+        border-radius: 25px;
+        color: black;
+        padding: 10px 25px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+    .dropdown-content a:hover {
+        background-color: #232426;
+        color: white;
+    }
+    .dropdown:hover .dropdown-content {display: block;}
+
+
+    .cover_pic{
+        position: absolute;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        top: 42%;
+        left: 50%;
+    }
+    .profile_pic{
+        position: absolute;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        border: 2px solid white;
+        top: 74%;
+        left: 35%;
+    }
+    .nick_name{
+        position: absolute;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        top: 77%;
+        left: 58%;
+        text-decoration: none;
+        font-size: 200%;
+        color: black;
+    }
+    .basic_info{
+        position: absolute;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        top: 35%;
+        left: 87%;
+        font-size: 25px;
+        color: black;
+    }
+{% endblock %}
+
+{% block navbar %}
+    <ul>
+        <li><a href="/" role="button">Home</a></li>
+        <li><a class="name active" href="{% url 'profile' %}">{{ infos.first_name }} {{ infos.last_name }}</a></li>
+        <li><a href="/user_list" role="button">User List</a></li>
+        <li><a href="/update_profile" role="button">Edit Profile</a></li>
+        <li style="float:right;"><a style="color:red;" href="/logout" role="button">Logout</a></li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <img class="cover_pic" src="{{ pro_info.cover_pic.url }}" style="width: 668px; height: 350px" /><br>
+    <img class="profile_pic" src="{{ pro_info.profile_pic.url }}" style="width: 200px; height: 200px; border-radius: 50%;" /><br>
+
+    <p class="nick_name">{{ infos.first_name }} {{ infos.last_name }} ({{ pro_info.nickname }})<br></p>
+
+
+    <div class="dropdown">
+        <a class="navbar" role="button">Set</a>
+        <div class="dropdown-content">
+            <a class="navbar" href="/show_nicknames" role="button">Nicknames</a>
+            <a class="navbar" href="/show_profile_pics" role="button">Profile Pictures</a>
+            <a class="navbar" href="/show_cover_pics" role="button">Cover Pictures</a>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <a class="navbar" role="button">Insert</a>
+        <div class="dropdown-content">
+            <a class="navbar" href="/insert_nickname" role="button">Nickname</a>
+            <a class="navbar" href="/insert_profile_pic" role="button">Profile Picture</a>
+            <a class="navbar" href="/insert_cover_pic" role="button">Cover Picture</a>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <a class="navbar" role="button">En-DE</a>
+        <div class="dropdown-content">
+            <a class="navbar" href="/encode" role="button">Encode</a>
+            <a class="navbar" href="/encoded_image_list" role="button">Decode</a>
+        </div>
+    </div>
+
+    <div class="basic_info">
+        <p><b>Basic Information</b></p><br>
+        <p>{{ infos.first_name }} {{ infos.last_name }}</p>
+        <p>{{ uname }}</p>
+        <p>{{ infos.email }}</p>
+        <p>{{ infos.phone_number }}</p>
+        <p>{{ infos.gender }}</p>
+    </div>
+{% endblock %}

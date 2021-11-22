@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Show Profile Pics
+{% endblock %}
+
+{% block style %}
+    *{
+        margin: 0;
+        padding: 0;
+        font-family: "Century Gothic";
+    }
+    header{
+        background-color: #d5f4e6;
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+    }
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+    }
+
+    li {float: left;}
+
+    li a {
+        display: block;
+        color: white;
+        font-size: 28px;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a:hover {background-color: #111;}
+    .name {
+        font-weight: bold;
+        font-style: italic;
+    }
+    .bock_size{
+        margin: auto;
+        margin-top: 15px;
+        width: 1223px;
+    }
+{% endblock %}
+
+{% block navbar %}
+    <ul>
+        <li><a href="/" role="button">Home</a></li>
+        <li><a class="name" href="{% url 'profile' %}">{{ infos.first_name }} {{ infos.last_name }}</a></li>
+        <li><a href="/user_list" role="button">User List</a></li>
+        <li style="float:right;"><a style="color:red;" href="/logout" role="button">Logout</a></li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <div class="bock_size">
+        {% for i in profile_pics %}
+            <a href="{% url 'set_profile_pic' profile_pic_id=i.id %}"><img src="{{ i.profile_pic.url }}" style="width: 200px; height: 200px;" /></a>
+        {% endfor %}
+    </div>
+{% endblock %}
